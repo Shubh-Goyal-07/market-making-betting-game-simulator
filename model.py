@@ -12,8 +12,19 @@ def expected_value(values, probabilities):
     np_probs = np.array(probabilities)
     return np.sum(np_val * np_probs)
 
-# Step 2 - one_reroll_die_value (not yet solved)
-# TODO: implement
+# Step 2 - one_reroll_die_value
+def one_reroll_die_value(sides):
+    narr = np.arange(1, sides + 1, dtype=float)
+    probs = np.ones(sides) / sides
+    mu = expected_value(narr, probs)
+    reroll_mask = narr < mu
+    rerolled_values = narr[reroll_mask].astype(int).tolist()
+    narr[reroll_mask] = mu
+
+    return {
+        "value": np.mean(narr), 
+        "reroll_faces": rerolled_values
+    }
 
 # Step 3 - pay_per_reroll_die_game (not yet solved)
 # TODO: implement
