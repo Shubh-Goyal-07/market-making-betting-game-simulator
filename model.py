@@ -26,8 +26,28 @@ def one_reroll_die_value(sides):
         "reroll_faces": rerolled_values
     }
 
-# Step 3 - pay_per_reroll_die_game (not yet solved)
-# TODO: implement
+# Step 3 - pay_per_reroll_die_game
+import numpy as np
+
+def pay_per_reroll_die_game(sides, reroll_cost):
+    if (reroll_cost==0) or (sides==1):
+        return {
+            "threshold": sides,
+            "value": sides
+        }
+
+    t_arr = np.arange(1, sides)
+    V_t_arr = ((t_arr + sides)/2) - (reroll_cost * (t_arr - 1)/(sides - t_arr + 1))
+
+    t = np.argmax(V_t_arr)
+    Vt = V_t_arr[t]
+
+
+
+    return {
+        "threshold": int(t+1),
+        "value": Vt
+    }
 
 # Step 4 - red_black_card_game_value (not yet solved)
 # TODO: implement
